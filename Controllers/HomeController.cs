@@ -22,6 +22,18 @@ namespace CarPlanet.Controllers {
         public IActionResult Privacy() {
             return View();
         }
+        public IActionResult Autos() {
+            return View();
+        }
+        public IActionResult Impressum() {
+            return View();
+        }
+        public IActionResult LoginRegister() {
+            return View();
+        }
+        public IActionResult Ersatzteile() {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {
