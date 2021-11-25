@@ -96,3 +96,26 @@ body {
     line-height: 60px;
 }
 
+table, th, td, caption {
+    border: thin solid #a0a0a0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-width: thin 0 0 thin;
+    margin: 0 0 1em;
+    table-layout: auto;
+    max-width: 100%;
+}
+
+th, td {
+    font-weight: normal;
+    text-align: left;
+}
+
+th, caption {
+    background-color: #f1f3f4;
+    font-weight: 700;
+}
+
