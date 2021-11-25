@@ -13,9 +13,9 @@ namespace CarPlanet.Controllers {
         }
         private List<Autos> AutosListe()
         {
-            Autos a1 = new Autos(1, "Mustang", "Ford", new DateTime(17, 4, 1964), 274);
-            Autos a2 = new Autos(2, "Skyline GTR", "Nissan", new DateTime(1, 4, 1999), 280);
-            Autos a3 = new Autos(3, "P1", "McLaren", new DateTime(1, 10, 2013), 916);
+            Autos a1 = new Autos(1, "Mustang", "Ford", new DateTime(1964, 4, 17), 274);
+            Autos a2 = new Autos(2, "Skyline GTR", "Nissan", new DateTime(1999, 4, 1), 280);
+            Autos a3 = new Autos(3, "P1", "McLaren", new DateTime(2013, 10, 1), 916);
 
             return new List<Autos>() {
                 a1,a2,a3
