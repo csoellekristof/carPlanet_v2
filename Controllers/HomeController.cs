@@ -33,7 +33,8 @@ namespace CarPlanet.Controllers {
             return View();
         }
         public IActionResult Ersatzteile() {
-            return View();
+            List<Ersatzteil> e = TeilListe();
+            return View(e);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
