@@ -1,5 +1,48 @@
-﻿
+﻿@model List<CarPlanet.Models.Autos>
 @{
     ViewData["Title"] = "Autos";
 }
 <p>Hier kommen die Autos</p>
+
+
+
+
+
+<h3>Coole Autos</h3>
+@if ((Model != null) && (Model.Count >= 1))
+{
+
+    <table>
+
+        <thead>
+            <tr>
+                <td>Artikelname</td>
+                <td>Hersteller</td>
+                <td>Erscheinungsdatum</td>
+                <td>Leistung in HP</td>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            @foreach (Autos a in Model)
+            {
+                <tr>
+
+                    <td>@a.Autoname</td>
+                    <td>@a.Brand</td>
+                    <td>@a.ReleaseDate</td>
+                    <td>@a.PS</td>
+                </tr>
+            }
+
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td></td>
+            </tr>
+        </tfoot>
+
+    </table>
+}

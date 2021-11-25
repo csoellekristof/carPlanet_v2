@@ -9,7 +9,7 @@ namespace CarPlanet.Controllers {
     public class AutoController : Controller {
         public IActionResult Index() {
             List<Autos> B = AutosListe();
-            return View();
+            return View(B);
         }
         private List<Autos> AutosListe()
         {
