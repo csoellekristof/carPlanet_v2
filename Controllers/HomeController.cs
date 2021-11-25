@@ -50,6 +50,17 @@ namespace CarPlanet.Controllers {
                 a1,a2,a3
             };
         }
+
+        private List<Ersatzteil> TeilListe()
+        {
+            Ersatzteil e1 = new Ersatzteil(1, "Turbocharger",   "ISt ein Kompressor der mithilfe des Abgsstroms mehr Luft treibstoff gemisch in den Motor bringt was in mehr PS resultiert");
+            Ersatzteil e2 = new Ersatzteil(2, "Kompressor",  "Ist ein Kompressor der durch den Keilriehmen angetrieben wird und mehr Lut Treibstoffgemisch in den Motor brint wodurch man mehr PS hat");
+            Ersatzteil e3 = new Ersatzteil(3, "Federung",  "Sorgt für bessere strassenhaftung und mehr fahrkomvor");
+
+            return new List<Ersatzteil>() {
+                e1,e2,e3
+            };
+        }
     }
 
 }
