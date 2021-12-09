@@ -1,0 +1,33 @@
+﻿login {
+    display:flex;
+    float:left;
+    width: 45%;
+   
+    
+}
+
+
+register {
+    display: flex;
+    float: right;
+    width: 45%;
+  
+}
+
+#register {
+    display: inline;
+    float: none;
+}
+#login {
+
+    display:inline;
+
+}
+
+divider {
+    border-left: 2px solid black;
+    height: 60%; position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    top: 100px;
+}
