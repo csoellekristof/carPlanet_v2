@@ -69,10 +69,13 @@ namespace CarPlanet.Controllers
             Boolean Kleinbuchstabe = false;
             Boolean Großbuchstabe = false;
             Boolean Zahl = false;
-
-            for (int i = 0; i < u.Passwort.Length; i++)
+            string password = u.Passwort;
+            Großbuchstabe = !password.ToLower().Equals(password);
+            Kleinbuchstabe = !password.ToUpper().Equals(password);
+            if(Kleinbuchstabe == false || Großbuchstabe == false)
             {
-                
+                ModelState.AddModelError("Passwort", "Das Passwort muss Grosbuchsdtaben und Kleinbuchstaben enthalten");
+
             }
             //Plus mindestens ein Grosbuchstabe einem Grosbuchstaben einer Zahl + sonderzeichen
             //Email
