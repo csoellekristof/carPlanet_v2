@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CarPlanet.Models;
-using FirstWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace CarPlanet.Controllers
 {
