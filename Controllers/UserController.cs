@@ -68,7 +68,7 @@ namespace CarPlanet.Controllers
             }
             Boolean Kleinbuchstabe = false;
             Boolean Großbuchstabe = false;
-            Boolean Zahl = false;
+            
             string password = u.Passwort;
             Großbuchstabe = !password.ToLower().Equals(password);
             Kleinbuchstabe = !password.ToUpper().Equals(password);
