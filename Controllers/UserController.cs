@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CarPlanet.Models;
 using FirstWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace CarPlanet.Controllers
@@ -38,7 +39,7 @@ namespace CarPlanet.Controllers
             //fals das Formular richtig ausgefüllt wurde
             if (ModelState.IsValid)
             {
-                return RedirectToAction("index", "home");
+                return RedirectToAction("Message", new Message("Registrierung", "Ihre Daten wurden erfolgreich abgespeichert"));
             }
 
             //Eingabedaten in  einer DB-Tabelle abspeichern
