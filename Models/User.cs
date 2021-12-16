@@ -24,7 +24,7 @@ namespace CarPlanet.Models
                 }
             }
         }
-        public string Username { get; set; }
+        
 
         public string Passwort { get; set; }
 

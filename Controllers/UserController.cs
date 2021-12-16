@@ -16,20 +16,20 @@ namespace CarPlanet.Controllers
         }
 
         [HttpGet]
-        public IActionResult Registration()
+        public IActionResult LoginRegister()
         {
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult Registration(User userDaterFromForm)
+        public IActionResult LoginRegister(User userDaterFromForm)
         {
             //Parameter Überprüfen
             if (userDaterFromForm == null)
             {
                 //weiteleitung an eine Methode (Action) in selben Controller
-                return RedirectToAction("Registration");
+                return RedirectToAction("LoginRegister");
             }
 
             //Eingaben des Benutzers Überprüfen - Validierung
@@ -38,7 +38,7 @@ namespace CarPlanet.Controllers
             //fals das Formular richtig ausgefüllt wurde
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Message", new Message("Registrierung", "Ihre Daten wurden erfolgreich abgespeichert"));
+                return RedirectToAction("Index", "Home");
             }
 
             //Eingabedaten in  einer DB-Tabelle abspeichern
@@ -54,24 +54,25 @@ namespace CarPlanet.Controllers
                 return;
             }
             //Username
-            if (u.Username == null || u.Username.Trim().Length < 4)
+
+            if (!u.Email.Contains("@")|| u.Email == null)
             {
-                ModelState.AddModelError("Username", "Der Benutzername muss mindestens 4 zeichen lang sein");
-
+                ModelState.AddModelError("EMail", "Die EMail sollte in dem EMail-Format (bsp.: maxmustermann@abc.com)");
             }
-
             //Passwort
-            if (u.Passwort == null || (u.Passwort.Length < 8))
-            {
-                ModelState.AddModelError("Passwort", "Das Passwort muss mindestens 4 zeichen lang sein");
-
-            }
             Boolean Kleinbuchstabe = false;
             Boolean Großbuchstabe = false;
-            
+            if (u.Passwort == null || (u.Passwort.Length < 8))
+            {
+                ModelState.AddModelError("Passwort", "Das Passwort muss mindestens 8 zeichen lang sein");
+
+            }
+            else { 
+
             string password = u.Passwort;
             Großbuchstabe = !password.ToLower().Equals(password);
             Kleinbuchstabe = !password.ToUpper().Equals(password);
+            }
             if(Kleinbuchstabe == false || Großbuchstabe == false)
             {
                 ModelState.AddModelError("Passwort", "Das Passwort muss Grosbuchsdtaben und Kleinbuchstaben enthalten");
