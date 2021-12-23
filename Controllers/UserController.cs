@@ -62,6 +62,7 @@ namespace CarPlanet.Controllers
             //Passwort
             Boolean Kleinbuchstabe = false;
             Boolean Großbuchstabe = false;
+            string password = u.Passwort;
             if (u.Passwort == null || (u.Passwort.Length < 8))
             {
                 ModelState.AddModelError("Passwort", "Das Passwort muss mindestens 8 zeichen lang sein");
@@ -69,7 +70,7 @@ namespace CarPlanet.Controllers
             }
             else { 
 
-            string password = u.Passwort;
+            
             Großbuchstabe = !password.ToLower().Equals(password);
             Kleinbuchstabe = !password.ToUpper().Equals(password);
             }
@@ -78,8 +79,24 @@ namespace CarPlanet.Controllers
                 ModelState.AddModelError("Passwort", "Das Passwort muss Grosbuchsdtaben und Kleinbuchstaben enthalten");
 
             }
-            //Plus mindestens ein Grosbuchstabe einem Grosbuchstaben einer Zahl + sonderzeichen
-            //Email
+            bool Zahl = false;
+
+            Zahl = password.Contains("0");
+            Zahl = password.Contains("1");
+            Zahl = password.Contains("2");
+            Zahl = password.Contains("3");
+            Zahl = password.Contains("4");
+            Zahl = password.Contains("5");
+            Zahl = password.Contains("6");
+            Zahl = password.Contains("7");
+            Zahl = password.Contains("8");
+            Zahl = password.Contains("9");
+            
+            if (Zahl)
+            {
+                ModelState.AddModelError("Passwort", "Das Passwort muss eine Zahl enthalten");
+
+            }
 
             //Geburtsdatum
             if (u.Birthdate >= DateTime.Now)
