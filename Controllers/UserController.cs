@@ -11,22 +11,26 @@ namespace CarPlanet.Controllers
         public IActionResult Index()
         {
             
-            
             return View();
         }
 
         [HttpGet]
         public IActionResult LoginRegister()
         {
-
+            return View();
+        }
+        public IActionResult Register() {
+            return View();
+        }
+        public IActionResult Login() {
             return View();
         }
 
         [HttpPost]
-        public IActionResult LoginRegister(User userDaterFromForm)
+        public IActionResult Register(User userDataFromForm)
         {
             //Parameter Überprüfen
-            if (userDaterFromForm == null)
+            if (userDataFromForm == null)
             {
                 //weiteleitung an eine Methode (Action) in selben Controller
                 return RedirectToAction("LoginRegister");
@@ -34,7 +38,7 @@ namespace CarPlanet.Controllers
 
             //Eingaben des Benutzers Überprüfen - Validierung
 
-            ValidateRegistrationData(userDaterFromForm);
+            ValidateRegistrationData(userDataFromForm);
             //fals das Formular richtig ausgefüllt wurde
             if (ModelState.IsValid)
             {
@@ -43,7 +47,29 @@ namespace CarPlanet.Controllers
 
             //Eingabedaten in  einer DB-Tabelle abspeichern
             //Falls etwas falsch eingegeben wurde wird das Formular nocheinmal angezeigt
-            return View(userDaterFromForm);
+            return View(userDataFromForm);
+        }
+
+        public IActionResult Login(User userDataFromForm) {
+
+            //Parameter Überprüfen
+            if (userDataFromForm == null)
+            {
+                //weiteleitung an eine Methode (Action) in selben Controller
+                return RedirectToAction("LoginRegister");
+            }
+            ValidateLoginData(userDataFromForm);
+            //fals das Formular richtig ausgefüllt wurde
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "Home");   
+            }
+
+            //Eingabedaten in  einer DB-Tabelle abspeichern
+            //Falls etwas falsch eingegeben wurde wird das Formular nocheinmal angezeigt
+            return View(userDataFromForm);
+
+
         }
 
         private void ValidateRegistrationData(User u)
@@ -54,10 +80,15 @@ namespace CarPlanet.Controllers
                 return;
             }
             //Username
-
-            if (!u.Email.Contains("@")|| u.Email == null)
+            try
             {
-                ModelState.AddModelError("EMail", "Die EMail sollte in dem EMail-Format (bsp.: maxmustermann@abc.com)");
+                if (!u.Email.Contains("@"))
+                {
+                    ModelState.AddModelError("EMail", "Die EMail sollte in dem EMail-Format (bsp.: maxmustermann@abc.com)");
+                }
+            }
+            catch (NullReferenceException e) {
+                ModelState.AddModelError("EMail", "Feld muss ausgefüllt werden!");
             }
             //Passwort
             Boolean Kleinbuchstabe = false;
@@ -106,6 +137,11 @@ namespace CarPlanet.Controllers
             }
 
             //Gender
+        }
+
+        private void ValidateLoginData( User u) {
+
+           
         }
     }
 }
