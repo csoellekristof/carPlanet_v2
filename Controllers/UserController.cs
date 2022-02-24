@@ -42,12 +42,12 @@ namespace CarPlanet.Controllers
             //fals das Formular richtig ausgefüllt wurde
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("LoginRegister", "User");
             }
 
             //Eingabedaten in  einer DB-Tabelle abspeichern
             //Falls etwas falsch eingegeben wurde wird das Formular nocheinmal angezeigt
-            return View(userDataFromForm);
+            return RedirectToAction("LoginRegister",userDataFromForm);
         }
 
         public IActionResult Login(User userDataFromForm) {
@@ -84,11 +84,11 @@ namespace CarPlanet.Controllers
             {
                 if (!u.Email.Contains("@"))
                 {
-                    ModelState.AddModelError("EMail", "Die EMail sollte in dem EMail-Format (bsp.: maxmustermann@abc.com)");
+                    ModelState.AddModelError("Email", "Die EMail sollte in dem EMail-Format (bsp.: maxmustermann@abc.com)");
                 }
             }
             catch (NullReferenceException e) {
-                ModelState.AddModelError("EMail", "Feld muss ausgefüllt werden!");
+                ModelState.AddModelError("Email", "Feld muss ausgefüllt werden!");
             }
             //Passwort
             Boolean Kleinbuchstabe = false;
@@ -111,7 +111,7 @@ namespace CarPlanet.Controllers
             {
                 ModelState.AddModelError("Passwort", "Das Passwort muss Grosbuchsdtaben und Kleinbuchstaben enthalten");
             }
-            if(!u.Passwort.Contains("0") || !password.Contains("1") || !password.Contains("2") || !password.Contains("3") || !password.Contains("4") || !password.Contains("5") || !password.Contains("6") || !password.Contains("7") || !password.Contains("8") || !password.Contains("9"))
+            if(u.Passwort == null || !u.Passwort.Contains("0") || !password.Contains("1") || !password.Contains("2") || !password.Contains("3") || !password.Contains("4") || !password.Contains("5") || !password.Contains("6") || !password.Contains("7") || !password.Contains("8") || !password.Contains("9"))
             {
                 ModelState.AddModelError("Passwort", "Das Passwort muss eine Zahl enthalten");
 
