@@ -12,66 +12,9 @@
     <link rel="stylesheet" href="~/css/forms.css" />
 </head>
 <body>
-
-<login>
-<form asp-controller="User" asp-action="Loginregister" method="post">
-    <h3>Login</h3>
-    <div class="form-group">
-        <label asp-for="Email">Email Adresse</label>
-        <input type="email" class="form-control" asp-for="Email" placeholder="Email eingeben"></label>
-        <span asp-validation-for="Email"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Passwort">Passwort</label>
-        <input type="password" asp-for="Passwort" class="form-control" placeholder="Passwort eingeben">
-        <span asp-validation-for="Passwort"></span>
-    </div>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label">Eingeloggt bleiben</label>
-    </div>
-    <br>
-    <button type="submit" class="btn btn-primary">Einloggen</button>
-</form>
- </login>
-<divider></divider>
-<register>
-    <form asp-controller="user" asp-action="LoginRegister" method="post">
-        <h3>Registrieren</h3>
-        <div class="form-group">
-            <label asp-for="Email">Email Adresse</label>
-            <input type="email" class="form-control" asp-for="Email" placeholder="Email eingeben"></label>
-            <span asp-validation-for="Email"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Passwort">Passwort</label>
-            <input type="password" asp-for="Passwort" class="form-control" placeholder="Passwort eingeben">
-            <span asp-validation-for="Passwort"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Birthdate"></label>
-            <input type="date" asp-for="Birthdate" class="form-control">
-            <span asp-validation-for="Birthdate"></span>
-        </div>
-        
-        <div class="form-group">
-            <label asp-for="Gender">Geschlecht</label>
-            <select asp-for="Gender">
-                <option value="0">männlich</option>
-                <option value="1">weiblich</option>
-                <option selected value="2">divers</option>
-            </select>
-            <span asp-validation-for="Gender"></span>
-        </div>
-
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label">Ich habe die <a href="/ABG.pdf" )" target="_blank">AGB</a> gelesen und bin damit Einverstanden</label>
-            </div>
-            <br>
-            <button type="submit" class="btn btn-primary">Registrieren</button>
-    </form>
-</register>
+    <partial name="Login" />
+    <divider></divider>
+    <partial name="Register">
 </body>
 </html>
 
