@@ -34,6 +34,8 @@ namespace CarPlanet.Models
 
         public Gender Gender { get; set; }
 
+        public bool AGB { get; set; }
+
 
     }
 }

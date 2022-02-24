@@ -62,47 +62,46 @@ namespace CarPlanet.Controllers
             //Passwort
             Boolean Kleinbuchstabe = false;
             Boolean Großbuchstabe = false;
+            
             string password = u.Passwort;
             if (u.Passwort == null || (u.Passwort.Length < 8))
             {
                 ModelState.AddModelError("Passwort", "Das Passwort muss mindestens 8 zeichen lang sein");
 
             }
-            else { 
+            else {
 
-            
-            Großbuchstabe = !password.ToLower().Equals(password);
+                
+
+                Großbuchstabe = !password.ToLower().Equals(password);
             Kleinbuchstabe = !password.ToUpper().Equals(password);
             }
-            if(Kleinbuchstabe == false || Großbuchstabe == false)
+            if(Kleinbuchstabe == false || Großbuchstabe == false  )
             {
                 ModelState.AddModelError("Passwort", "Das Passwort muss Grosbuchsdtaben und Kleinbuchstaben enthalten");
-
             }
-            bool Zahl = false;
-
-            Zahl = password.Contains("0");
-            Zahl = password.Contains("1");
-            Zahl = password.Contains("2");
-            Zahl = password.Contains("3");
-            Zahl = password.Contains("4");
-            Zahl = password.Contains("5");
-            Zahl = password.Contains("6");
-            Zahl = password.Contains("7");
-            Zahl = password.Contains("8");
-            Zahl = password.Contains("9");
-            
-            if (Zahl)
+            if(!u.Passwort.Contains("0") || !password.Contains("1") || !password.Contains("2") || !password.Contains("3") || !password.Contains("4") || !password.Contains("5") || !password.Contains("6") || !password.Contains("7") || !password.Contains("8") || !password.Contains("9"))
             {
                 ModelState.AddModelError("Passwort", "Das Passwort muss eine Zahl enthalten");
 
             }
+
+
+
+
+
 
             //Geburtsdatum
             if (u.Birthdate >= DateTime.Now)
             {
                 ModelState.AddModelError("Birthdate", "Das Geburtsdatum muss mindestens 4 zeichen lang sein");
 
+
+            }
+
+            if(u.AGB == false)
+            {
+                ModelState.AddModelError("AGB", "Sie müssen die AGBs Akzeptieren");
 
             }
 

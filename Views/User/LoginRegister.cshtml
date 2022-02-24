@@ -64,10 +64,12 @@
             <span asp-validation-for="Gender"></span>
         </div>
 
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label">Ich habe die <a href="/ABG.pdf" )" target="_blank">AGB</a> gelesen und bin damit Einverstanden</label>
-            </div>
+        <div class="form-check">
+            <label asp-for="AGB"></label>
+            <input type="checkbox" asp-for="AGB" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label">Ich habe die <a href="/ABG.pdf" )" target="_blank">AGB</a> gelesen und bin damit Einverstanden</label>
+            <span asp-validation-for="AGB"></span>
+        </div>
             <br>
             <button type="submit" class="btn btn-primary">Registrieren</button>
     </form>
