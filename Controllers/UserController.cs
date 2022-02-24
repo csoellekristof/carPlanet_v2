@@ -80,16 +80,13 @@ namespace CarPlanet.Controllers
                 return;
             }
             //Username
-            try
-            {
-                if (!u.Email.Contains("@"))
+            
+            if (u.Email == null || !u.Email.Contains("@"))
                 {
                     ModelState.AddModelError("EMail", "Die EMail sollte in dem EMail-Format (bsp.: maxmustermann@abc.com)");
                 }
-            }
-            catch (NullReferenceException e) {
-                ModelState.AddModelError("EMail", "Feld muss ausgefüllt werden!");
-            }
+            
+           
             //Passwort
             Boolean Kleinbuchstabe = false;
             Boolean Großbuchstabe = false;
