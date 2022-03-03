@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace FirstWebApp.Models.DB
@@ -249,6 +251,22 @@ namespace FirstWebApp.Models.DB
             return false;
         }
 
+        private static string GetSHA512(string text)
+        {
+            UnicodeEncoding UE = new UnicodeEncoding();
+            byte[] hashValue;
+            byte[] message = UE.GetBytes(text);
+            SHA512Managed hashString = new SHA512Managed();
+            string encodedData = Convert.ToBase64String(message);
+            string hex = "";
+            hashValue = hashString.ComputeHash(UE.GetBytes(encodedData));
+            foreach (byte x in hashValue)
+            {
+                hex += String.Format("{0:x2}", x);
+            }
+            return hex;
+        }
+
         public bool Login(string email, string password)
         {
             if (this._conn?.State == ConnectionState.Open)
@@ -273,7 +291,7 @@ namespace FirstWebApp.Models.DB
                     if (reader.Read())
                     {
                         String Passwort = Convert.ToString(reader["password"]);
-                        if (Passwort.Equals(password))
+                        if (Passwort.Equals(GetSHA512(password)))
                         {
                             return true;
                         }    
