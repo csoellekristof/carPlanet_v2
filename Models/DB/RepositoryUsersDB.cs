@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace FirstWebApp.Models.DB
@@ -14,7 +16,7 @@ namespace FirstWebApp.Models.DB
     {
         //Verbindungszeichenkette: enthält Server Ip, Datendbankname, User + Passwort
         // DB - Server
-        private string _connectionString = "Server=localhost;database=web_4b_gl;user=root;password=";
+        private string _connectionString = "Server=localhost;database=CarPlanet;user=root;password=";
         //über diese verbindung wird mit dem sever komuniziert
         private DbConnection _conn;
         public void Disconnect()
@@ -38,36 +40,52 @@ namespace FirstWebApp.Models.DB
         }
         public bool ChangeUserData(int userId, User newUserData)
         {
-            if (this._conn?.State == ConnectionState.Open)
+            if (this._conn?.State == System.Data.ConnectionState.Open)
             {
+                DbCommand cmd = this._conn.CreateCommand();
+                cmd.CommandText = "update users set password = sha2(@password, 512), " +
+                    "email = @email, birthdate = @birthdate, gender = @gender where user_id = @user_id";
+                
 
-                DbCommand cmdInsert = this._conn.CreateCommand();
-                //SQL Befahl angeben und Parameter verwenden um sql injections zu vermeiden
-                //  @username ... kann frei gewählt werden
-                //SQL injection: es versucht ein Angreifer einen SQL-Befehl an den MySQL server zu senden
-                cmdInsert.CommandText = "update @username from users where user_id = @userID";
-                //Parameter @username befüllen
-                //leeres Parameter Object erzeugen
-                DbParameter paramUN = cmdInsert.CreateParameter();
-                // hier denn oben gewählten Parameter name verwenden
-                paramUN.ParameterName = "userID";
-                paramUN.DbType = DbType.Int32;
-                paramUN.Value = userId;
+                DbParameter paramPW = cmd.CreateParameter();
+                paramPW.ParameterName = "password";
+                paramPW.DbType = System.Data.DbType.String;
+                paramPW.Value = newUserData.Passwort;
+
+                DbParameter paramEmail = cmd.CreateParameter();
+                paramEmail.ParameterName = "email";
+                paramEmail.DbType = System.Data.DbType.String;
+                paramEmail.Value = newUserData.Email;
+
+                DbParameter paramBD = cmd.CreateParameter();
+                paramBD.ParameterName = "birthdate";
+                paramBD.DbType = System.Data.DbType.Date;
+                paramBD.Value = newUserData.Birthdate;
+
+                DbParameter paramGender = cmd.CreateParameter();
+                paramGender.ParameterName = "gender";
+                paramGender.DbType = System.Data.DbType.Int32;
+                paramGender.Value = newUserData.Gender;
+
+                DbParameter paramID = cmd.CreateParameter();
+                paramGender.ParameterName = "user_id";
+                paramGender.DbType = System.Data.DbType.Int32;
+                paramGender.Value = newUserData.UserID;
 
 
+                
+                cmd.Parameters.Add(paramPW);
+                cmd.Parameters.Add(paramEmail);
+                cmd.Parameters.Add(paramBD);
+                cmd.Parameters.Add(paramGender);
+                cmd.Parameters.Add(paramID);
 
-                //Paraneter mit unserem Command angeben
-                cmdInsert.Parameters.Add(paramUN);
-
-
-                //nun senden wir das Command an den server
-                return cmdInsert.ExecuteNonQuery() == 1;
-
+                return cmd.ExecuteNonQuery() == 1;
             }
             return false;
         }
 
-        
+
 
         public bool Delete(int userId)
         {
@@ -220,6 +238,7 @@ namespace FirstWebApp.Models.DB
                 paramG.Value = user.Gender;
 
                 //Paraneter mit unserem Command angeben
+                
                 cmdInsert.Parameters.Add(paramPWD);
                 cmdInsert.Parameters.Add(paramEmail);
                 cmdInsert.Parameters.Add(paramDate);
@@ -232,19 +251,35 @@ namespace FirstWebApp.Models.DB
             return false;
         }
 
-        public bool Login(string username, string password)
+        private static string GetSHA512(string text)
+        {
+            UnicodeEncoding UE = new UnicodeEncoding();
+            byte[] hashValue;
+            byte[] message = UE.GetBytes(text);
+            SHA512Managed hashString = new SHA512Managed();
+            string encodedData = Convert.ToBase64String(message);
+            string hex = "";
+            hashValue = hashString.ComputeHash(UE.GetBytes(encodedData));
+            foreach (byte x in hashValue)
+            {
+                hex += String.Format("{0:x2}", x);
+            }
+            return hex;
+        }
+
+        public bool Login(string email, string password)
         {
             if (this._conn?.State == ConnectionState.Open)
             {
                 DbCommand cmdInsert = this._conn.CreateCommand();
 
-                cmdInsert.CommandText = "select password from users where username = @username";
+                cmdInsert.CommandText = "select password from users where email = @email";
                 //leeres Parameter Object erzeugen
                 DbParameter paramUN = cmdInsert.CreateParameter();
                 // hier denn oben gewählten Parameter name verwenden
-                paramUN.ParameterName = "username";
-                paramUN.DbType = DbType.Int32;
-                paramUN.Value = username;
+                paramUN.ParameterName = "email";
+                paramUN.DbType = DbType.String;
+                paramUN.Value = email;
 
 
 
@@ -256,7 +291,7 @@ namespace FirstWebApp.Models.DB
                     if (reader.Read())
                     {
                         String Passwort = Convert.ToString(reader["password"]);
-                        if (Passwort.Equals(password))
+                        if (Passwort.Equals(GetSHA512(password)))
                         {
                             return true;
                         }    
