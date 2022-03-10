@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - CarPlanet</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/forms.css" />
 </head>
 <body>
     <header>
@@ -35,7 +36,10 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Datenschutz</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="LoginRegister">Login</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="Register">Register</a>
                         </li>
                     </ul>
                 </div>

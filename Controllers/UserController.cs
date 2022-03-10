@@ -15,13 +15,10 @@ namespace CarPlanet.Controllers
         }
 
         [HttpGet]
-        public IActionResult LoginRegister()
-        {
-            return View();
-        }
         public IActionResult Register() {
             return View();
         }
+        [HttpGet]
         public IActionResult Login() {
             return View();
         }
@@ -33,7 +30,7 @@ namespace CarPlanet.Controllers
             if (userDataFromForm == null)
             {
                 //weiteleitung an eine Methode (Action) in selben Controller
-                return RedirectToAction("LoginRegister");
+                return RedirectToAction("Register");
             }
 
             //Eingaben des Benutzers Überprüfen - Validierung
@@ -42,21 +39,22 @@ namespace CarPlanet.Controllers
             //fals das Formular richtig ausgefüllt wurde
             if (ModelState.IsValid)
             {
-                return RedirectToAction("LoginRegister", "User");
+                return RedirectToAction("Login", "User");
             }
 
             //Eingabedaten in  einer DB-Tabelle abspeichern
             //Falls etwas falsch eingegeben wurde wird das Formular nocheinmal angezeigt
-            return RedirectToAction("LoginRegister",userDataFromForm);
+            return  View(userDataFromForm);
         }
 
+        [HttpPost]
         public IActionResult Login(User userDataFromForm) {
 
             //Parameter Überprüfen
             if (userDataFromForm == null)
             {
                 //weiteleitung an eine Methode (Action) in selben Controller
-                return RedirectToAction("LoginRegister");
+                return RedirectToAction("Login");
             }
             ValidateLoginData(userDataFromForm);
             //fals das Formular richtig ausgefüllt wurde
@@ -108,11 +106,11 @@ namespace CarPlanet.Controllers
             {
                 ModelState.AddModelError("Passwort", "Das Passwort muss Grosbuchsdtaben und Kleinbuchstaben enthalten");
             }
-            if(u.Passwort == null || !u.Passwort.Contains("0") || !password.Contains("1") || !password.Contains("2") || !password.Contains("3") || !password.Contains("4") || !password.Contains("5") || !password.Contains("6") || !password.Contains("7") || !password.Contains("8") || !password.Contains("9"))
-            {
-                ModelState.AddModelError("Passwort", "Das Passwort muss eine Zahl enthalten");
+            //if(u.Passwort == null || !u.Passwort.Contains("0") || !password.Contains("1") || !password.Contains("2") || !password.Contains("3") || !password.Contains("4") || !password.Contains("5") || !password.Contains("6") || !password.Contains("7") || !password.Contains("8") || !password.Contains("9"))
+            //{
+              //  ModelState.AddModelError("Passwort", "Das Passwort muss eine Zahl enthalten");
 
-            }
+         //   }
 
 
 

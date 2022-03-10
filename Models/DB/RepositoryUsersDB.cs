@@ -220,7 +220,6 @@ namespace FirstWebApp.Models.DB
                 paramG.Value = user.Gender;
 
                 //Paraneter mit unserem Command angeben
-                cmdInsert.Parameters.Add(paramUN);
                 cmdInsert.Parameters.Add(paramPWD);
                 cmdInsert.Parameters.Add(paramEmail);
                 cmdInsert.Parameters.Add(paramDate);

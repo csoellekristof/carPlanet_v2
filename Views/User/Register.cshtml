@@ -3,16 +3,9 @@
 @{
     ViewData["Title"] = "Register";
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/forms.css" />
-</head>
 
 <body>
+    <div class="flex-container">
     <register>
         <form asp-controller="user" asp-action="Register" method="post">
             <h3>Registrieren</h3>
@@ -51,6 +44,21 @@
             <button type="submit" class="btn btn-primary">Registrieren</button>
         </form>
     </register>
+
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img height="580" width="464" src="https://i.pinimg.com/originals/a0/8a/29/a08a29cc6253f91cdcd5dcbe7189a6b6.jpg" alt="First slide">
+            </div>
+            <div class="carousel-item">
+                <img height="580" width="464" src="https://www.reuters.com/resizer/T6rG97r7TZ_aXfoj8GZdf8to6bM=/1920x2400/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/T7VRYMJJAVONFEIYOW43M67HJ4.jpg" alt="Second slide">
+            </div>
+            <div class="carousel-item">
+                <img height="580" width="464"  src="https://s.abcnews.com/images/Business/porsche-taycan-turbo-s-01-ht-iwb-210615_1623782736213_hpMain_4x5_992.jpg" alt="Third slide">
+            </div>
+        </div>
+    </div>
+    </div>
 
 
 </body>
