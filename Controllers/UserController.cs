@@ -18,13 +18,10 @@ namespace CarPlanet.Controllers
         }
 
         [HttpGet]
-        public IActionResult LoginRegister()
-        {
-            return View();
-        }
         public IActionResult Register() {
             return View();
         }
+        [HttpGet]
         public IActionResult Login() {
             return View();
         }
@@ -36,7 +33,7 @@ namespace CarPlanet.Controllers
             if (userDataFromForm == null)
             {
                 //weiteleitung an eine Methode (Action) in selben Controller
-                return RedirectToAction("LoginRegister");
+                return RedirectToAction("Register");
             }
 
             //Eingaben des Benutzers Überprüfen - Validierung
@@ -74,7 +71,7 @@ namespace CarPlanet.Controllers
 
             //Eingabedaten in  einer DB-Tabelle abspeichern
             //Falls etwas falsch eingegeben wurde wird das Formular nocheinmal angezeigt
-            return RedirectToAction("LoginRegister",userDataFromForm);
+            return  View(userDataFromForm);
         }
         [HttpPost]
         public IActionResult Login(User userDataFromForm) {
@@ -83,7 +80,7 @@ namespace CarPlanet.Controllers
             if (userDataFromForm == null)
             {
                 //weiteleitung an eine Methode (Action) in selben Controller
-                return RedirectToAction("LoginRegister");
+                return RedirectToAction("Login");
             }
             ValidateLoginData(userDataFromForm);
             //fals das Formular richtig ausgefüllt wurde

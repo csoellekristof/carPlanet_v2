@@ -1,33 +1,38 @@
-﻿login {
-    display:flex;
-    float:left;
-    width: 45%;
+﻿
+.flex-container {
+    
+    display:inline-flex;
+    justify-content: flex-start;
+}
+
+login {
+    flex:2;
+    min-width:80%;
+    margin-right: 20px;
    
     
 }
 
-
 register {
-    display: flex;
-    float: right;
-    width: 45%;
-  
+   
+    flex:2;
+    min-width:80%;
+    margin-right: 20px;
 }
 
-#register {
-    display: inline;
-    float: none;
-}
-#login {
+.carousel slide {
 
-    display:inline;
+    flex:1;
+    max-width:480px;
 
 }
-
-divider {
-    border-left: 2px solid black;
-    height: 60%; position: absolute;
-    left: 50%;
-    margin-left: -3px;
-    top: 100px;
+.carousel-inner {
+    max-width:480px;
+    min-width:480px;
 }
+.form-group {
+    
+    width:60%
+}
+
+
