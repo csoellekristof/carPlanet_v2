@@ -295,7 +295,7 @@ namespace FirstWebApp.Models.DB
                 {
                     if (reader.Read())
                     {
-                        string Username = Convert.ToString(reader["password"]);
+                        string Username = Convert.ToString(reader["email"]);
                         if (Username.Equals(email))
                         {
                             return true;
