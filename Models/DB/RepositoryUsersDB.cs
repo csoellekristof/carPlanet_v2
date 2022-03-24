@@ -19,15 +19,15 @@ namespace FirstWebApp.Models.DB
         private string _connectionString = "Server=localhost;database=carplanet;user=root;password=";
         //über diese verbindung wird mit dem sever komuniziert
         private DbConnection _conn;
-        public void Disconnect()
+        public async Task DisconnectAsync()
         {
-           //fals die Verbindung existiert und geöffnet ist
-           if((this._conn != null) && (this._conn.State == ConnectionState.Open))
+            //fals die Verbindung existiert und geöffnet ist
+            if ((this._conn != null) && (this._conn.State == ConnectionState.Open))
             {
-                this._conn.Close();
+                await this._conn.CloseAsync();
             }
         }
-        public void Connect()
+        public async Task ConnectAsync()
         {
             if (this._conn == null)
             {
@@ -35,10 +35,11 @@ namespace FirstWebApp.Models.DB
             }
             if (this._conn.State != ConnectionState.Open)
             {
-                this._conn.Open();
+                //await wartet bis die Methode fertig ausgeführt wurde
+                await this._conn.OpenAsync();
             }
         }
-        public bool ChangeUserData(int userId, User newUserData)
+        public async Task<bool> ChangeUserDataAsync(int userId, User newUserData)
         {
             if (this._conn?.State == System.Data.ConnectionState.Open)
             {
@@ -80,14 +81,14 @@ namespace FirstWebApp.Models.DB
                 cmd.Parameters.Add(paramGender);
                 cmd.Parameters.Add(paramID);
 
-                return cmd.ExecuteNonQuery() == 1;
+                return await cmd.ExecuteNonQueryAsync() == 1;
             }
             return false;
         }
 
 
 
-        public bool Delete(int userId)
+        public async Task<bool> DeleteAsync(int userId)
         {
             if (this._conn?.State == ConnectionState.Open)
             {
@@ -112,7 +113,7 @@ namespace FirstWebApp.Models.DB
                 
 
                 //nun senden wir das Command an den server
-                return true;
+                return await cmdInsert.ExecuteNonQueryAsync() == 1;
 
             }
             return false;
@@ -120,7 +121,7 @@ namespace FirstWebApp.Models.DB
 
         
 
-        public List<User> GetAllUsers()
+        public async Task<List<User>> GetAllUsersAsync()
         {
             List<User> users = new List<User>();
             if(this._conn?.State == ConnectionState.Open)
@@ -131,10 +132,10 @@ namespace FirstWebApp.Models.DB
 
                 //Wir bekommen nun eine komplette tabelle zurück
                 //diese wird mit einem db data reader zeile für zeile durchlaufen
-                using(DbDataReader reader = cmdAllUsers.ExecuteReader())
+                using(DbDataReader reader = await cmdAllUsers.ExecuteReaderAsync())
                 {
                     //mit read wird jeweils eine einzelne zeile gelesen
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
                         //den User in der Liste abspeichern
                         users.Add(new User()
@@ -159,7 +160,7 @@ namespace FirstWebApp.Models.DB
             return users;
         }
 
-        public User GetUser(int userId)
+        public async Task<User> GetUserAsync(int userId)
         {
             if (this._conn?.State == ConnectionState.Open)
             {
@@ -178,9 +179,9 @@ namespace FirstWebApp.Models.DB
                 //Paraneter mit unserem Command angeben
                 cmdInsert.Parameters.Add(paramUN);
 
-                using(DbDataReader reader = cmdInsert.ExecuteReader())
+                using(DbDataReader reader = await cmdInsert.ExecuteReaderAsync())
                 {
-                    if (reader.Read())
+                    if (await reader.ReadAsync())
                     {
                         User user = new User()
                         {
@@ -199,7 +200,7 @@ namespace FirstWebApp.Models.DB
 
         }
 
-        public bool Insert(User user)
+        public async Task<bool> InsertAsync(User user)
         {
             if (this._conn?.State == ConnectionState.Open)
             {
@@ -245,29 +246,15 @@ namespace FirstWebApp.Models.DB
                 cmdInsert.Parameters.Add(paramG);
 
                 //nun senden wir das Command an den server
-                return cmdInsert.ExecuteNonQuery() == 1;
+                return await cmdInsert.ExecuteNonQueryAsync() == 1;
 
             }
             return false;
         }
 
-        private static string GetSHA512(string text)
-        {
-            UnicodeEncoding UE = new UnicodeEncoding();
-            byte[] hashValue;
-            byte[] message = UE.GetBytes(text);
-            SHA512Managed hashString = new SHA512Managed();
-            string encodedData = Convert.ToBase64String(message);
-            string hex = "";
-            hashValue = hashString.ComputeHash(UE.GetBytes(encodedData));
-            foreach (byte x in hashValue)
-            {
-                hex += String.Format("{0:x2}", x);
-            }
-            return hex;
-        }
+        
 
-        public bool Login(string email, string password)
+        public async Task<bool> LoginAsync(string email, string password)
         {
             if (this._conn?.State == ConnectionState.Open)
             {
@@ -291,9 +278,9 @@ namespace FirstWebApp.Models.DB
                 //Paraneter mit unserem Command angeben
                 cmdInsert.Parameters.Add(paramUN);
                 cmdInsert.Parameters.Add(paramPWD);
-                using (DbDataReader reader = cmdInsert.ExecuteReader())
+                using (DbDataReader reader = await cmdInsert.ExecuteReaderAsync())
                 {
-                    if (reader.Read())
+                    if (await reader.ReadAsync())
                     {
                         string Username = Convert.ToString(reader["email"]);
                         if (Username.Equals(email))

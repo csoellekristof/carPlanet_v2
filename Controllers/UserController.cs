@@ -27,7 +27,7 @@ namespace CarPlanet.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(User userDataFromForm)
+        public async Task<IActionResult> Register(User userDataFromForm)
         {
             //Parameter Überprüfen
             if (userDataFromForm == null)
@@ -44,8 +44,8 @@ namespace CarPlanet.Controllers
             {
                 try
                 {
-                    _rep.Connect();
-                    if (_rep.Insert(userDataFromForm))
+                    await _rep.ConnectAsync();
+                    if (await _rep.InsertAsync(userDataFromForm))
                     {
                         return View("Login");
 
@@ -63,7 +63,7 @@ namespace CarPlanet.Controllers
                 }
                 finally
                 {
-                    _rep.Disconnect();
+                    await _rep.DisconnectAsync();
                 }
 
                 
@@ -74,7 +74,7 @@ namespace CarPlanet.Controllers
             return  View(userDataFromForm);
         }
         [HttpPost]
-        public IActionResult Login(User userDataFromForm) {
+        public async Task<IActionResult> Login(User userDataFromForm) {
 
             //Parameter Überprüfen
             if (userDataFromForm == null)
@@ -88,8 +88,8 @@ namespace CarPlanet.Controllers
             {
                 try
                 {
-                    _rep.Connect();
-                    if (_rep.Login(userDataFromForm.Email, userDataFromForm.Passwort))
+                    await _rep.ConnectAsync();
+                    if (await _rep.LoginAsync(userDataFromForm.Email, userDataFromForm.Passwort))
                     {
                         return View("Message", new Message("Login", "Sie sind jetzt angemeldet"));
 
@@ -107,7 +107,7 @@ namespace CarPlanet.Controllers
                 }
                 finally
                 {
-                    _rep.Disconnect();
+                    await _rep.DisconnectAsync();
                 }
             }
 
