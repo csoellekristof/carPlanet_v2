@@ -16,7 +16,7 @@ namespace FirstWebApp.Models.DB
     {
         //Verbindungszeichenkette: enthält Server Ip, Datendbankname, User + Passwort
         // DB - Server
-        private string _connectionString = "Server=localhost;database=CarPlanet;user=root;password=";
+        private string _connectionString = "Server=localhost;database=carplanet;user=root;password=";
         //über diese verbindung wird mit dem sever komuniziert
         private DbConnection _conn;
         public void Disconnect()

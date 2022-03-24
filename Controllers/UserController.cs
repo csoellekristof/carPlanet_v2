@@ -47,7 +47,7 @@ namespace CarPlanet.Controllers
                     _rep.Connect();
                     if (_rep.Insert(userDataFromForm))
                     {
-                        return View("Message", new Message("Registrierung", "Ihre Daten wurden erfolgreich abgespeichert"));
+                        return View("Login");
 
                     }
                     else
