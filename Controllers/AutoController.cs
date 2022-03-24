@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CarPlanet.Controllers {
     public class AutoController : Controller {
-        public IActionResult Index() {
-            List<Autos> B = AutosListe();
-            return View(B);
+        public IActionResult Autos() {
+
+            return View();
         }
         private List<Autos> AutosListe()
         {
