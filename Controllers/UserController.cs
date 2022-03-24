@@ -96,7 +96,7 @@ namespace CarPlanet.Controllers
                     }
                     else
                     {
-                        return View("Message", new Message("Login", "IHr Passwort oder username ist Falsch!"));
+                        return View("Message", new Message("Login", "Ihr Passwort oder username ist Falsch!"));
 
                     }
                 }
@@ -117,6 +117,11 @@ namespace CarPlanet.Controllers
 
 
         }
+
+
+
+
+
         private void ValidateLoginData(User u)
         {
             if (u == null)

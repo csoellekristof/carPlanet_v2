@@ -299,9 +299,9 @@ namespace FirstWebApp.Models.DB
                         if (Username.Equals(email))
                         {
                             return true;
-                        }    
-                        
-                        
+                        }
+
+
                     }
                 }
             }
