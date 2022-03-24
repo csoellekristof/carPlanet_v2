@@ -273,7 +273,7 @@ namespace FirstWebApp.Models.DB
             {
                 DbCommand cmdInsert = this._conn.CreateCommand();
 
-                cmdInsert.CommandText = "select password from users where email = @email";
+                cmdInsert.CommandText = "select email from users where email = @email and password = sha2(@password, 512)";
                 //leeres Parameter Object erzeugen
                 DbParameter paramUN = cmdInsert.CreateParameter();
                 // hier denn oben gewählten Parameter name verwenden
@@ -281,17 +281,22 @@ namespace FirstWebApp.Models.DB
                 paramUN.DbType = DbType.String;
                 paramUN.Value = email;
 
+                DbParameter paramPWD = cmdInsert.CreateParameter();
+                // hier denn oben gewählten Parameter name verwenden
+                paramPWD.ParameterName = "password";
+                paramPWD.DbType = DbType.String;
+                paramPWD.Value = password;
 
 
                 //Paraneter mit unserem Command angeben
                 cmdInsert.Parameters.Add(paramUN);
-
+                cmdInsert.Parameters.Add(paramPWD);
                 using (DbDataReader reader = cmdInsert.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        String Passwort = Convert.ToString(reader["password"]);
-                        if (Passwort.Equals(GetSHA512(password)))
+                        string Username = Convert.ToString(reader["email"]);
+                        if (Username.Equals(email))
                         {
                             return true;
                         }    

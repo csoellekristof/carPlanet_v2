@@ -8,7 +8,7 @@ create table users(
 	);
 
 insert into users values(null,sha2("Hallo123!", 512), "kristof@gmail.com","2002-12-31",0);
-insert into users values(null,sha2("Hallo123!", 512), "johannes@gmail.com","2004-08-04",0);
+insert into users values(null,sha2("", 512), "johannes@gmail.com","2004-08-04",0);
 insert into users values(null,sha2("sadas", 512), "gabi@gmail.com","2003-11-11",1);
 
 create table Autos(
