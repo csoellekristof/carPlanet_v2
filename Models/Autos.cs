@@ -34,10 +34,10 @@ namespace CarPlanet.Models
         public Autos(int AutoId, string Name, string Beschreibung, string Typ, string Link)
         {
             this.AutoId = AutoId;
-            this.Autoname = Autoname;
-            this.Brand = Brand;
-            this.ReleaseDate = ReleaseDate;
-            this.PS = PS;
+            this.Name = Name;
+            this.Beschreibung = Beschreibung;
+            this.Typ = Typ;
+            this.Link = Link;
         }
 
         public Autos()

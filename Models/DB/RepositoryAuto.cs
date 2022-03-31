@@ -36,7 +36,7 @@ namespace CarPlanet.Models.DB
             }
         }
 
-        public async Task<bool> ChangeUserDataAsync(int userId, Autos newAutoData)
+        public async Task<bool> ChangeAutoDataAsync(int autoId, Autos newAutoData)
         {
             if (this._conn?.State == System.Data.ConnectionState.Open)
             {
@@ -157,19 +157,19 @@ namespace CarPlanet.Models.DB
             return autos;
         }
 
-        public async Task<User> GetUserAsync(int userId)
+        public async Task<Autos> GetAutoAsync(int autoId)
         {
             if (this._conn?.State == ConnectionState.Open)
             {
                 DbCommand cmdInsert = this._conn.CreateCommand();
 
-                cmdInsert.CommandText = "select * from users where user_id = @userID";
+                cmdInsert.CommandText = "select * from autos where auto_id = @autoID";
                 //leeres Parameter Object erzeugen
                 DbParameter paramUN = cmdInsert.CreateParameter();
                 // hier denn oben gewählten Parameter name verwenden
-                paramUN.ParameterName = "userID";
+                paramUN.ParameterName = "autoID";
                 paramUN.DbType = DbType.Int32;
-                paramUN.Value = userId;
+                paramUN.Value = autoId;
 
 
 
@@ -180,70 +180,66 @@ namespace CarPlanet.Models.DB
                 {
                     if (await reader.ReadAsync())
                     {
-                        User user = new User()
+                        Autos auto = new Autos()
                         {
-                            UserID = Convert.ToInt32(reader["user_id"]),
-
-                            Passwort = Convert.ToString(reader["password"]),
-                            Birthdate = Convert.ToDateTime(reader["birthdate"]),
-                            Email = Convert.ToString(reader["email"]),
-                            Gender = (Gender)Convert.ToInt32(reader["gender"])
+                            AutoId = Convert.ToInt32(reader["auto_id"]),
+                            Beschreibung = Convert.ToString(reader["Beschreibung"]),
+                            Typ = Convert.ToString(reader["Typ"]),
+                            Name = Convert.ToString(reader["Name"]),
+                            Link = Convert.ToString(reader["Link"])
                         };
-                        return user;
+                        return auto;
                     }
                 }
             }
-            return new User();
+            return new Autos();
 
         }
 
-        public async Task<bool> InsertAsync(User user)
+        public async Task<bool> InsertAsync(Autos auto)
         {
             if (this._conn?.State == ConnectionState.Open)
             {
 
-                DbCommand cmdInsert = this._conn.CreateCommand();
+                DbCommand cmd = this._conn.CreateCommand();
                 //SQL Befahl angeben und Parameter verwenden um sql injections zu vermeiden
                 //  @username ... kann frei gewählt werden
                 //SQL injection: es versucht ein Angreifer einen SQL-Befehl an den MySQL server zu senden
-                cmdInsert.CommandText = "insert into users values(null, sha2(@password, 512), @mail,@Date,@Gender)";
+                cmd.CommandText = "insert into autos values(null, @Name, @Beschreibung,@Typ,@Link)";
                 //Parameter @username befüllen
                 //leeres Parameter Object erzeugen
 
 
-                DbParameter paramPWD = cmdInsert.CreateParameter();
-                // hier denn oben gewählten Parameter name verwenden
-                paramPWD.ParameterName = "password";
-                paramPWD.DbType = DbType.String;
-                paramPWD.Value = user.Passwort;
+                DbParameter paramN = cmd.CreateParameter();
+                paramN.ParameterName = "name";
+                paramN.DbType = System.Data.DbType.String;
+                paramN.Value = auto.Name;
 
-                DbParameter paramEmail = cmdInsert.CreateParameter();
-                // hier denn oben gewählten Parameter name verwenden
-                paramEmail.ParameterName = "mail";
-                paramEmail.DbType = DbType.String;
-                paramEmail.Value = user.Email;
+                DbParameter paramB = cmd.CreateParameter();
+                paramB.ParameterName = "beschreibung";
+                paramB.DbType = System.Data.DbType.String;
+                paramB.Value = auto.Beschreibung;
 
-                DbParameter paramDate = cmdInsert.CreateParameter();
-                // hier denn oben gewählten Parameter name verwenden
-                paramDate.ParameterName = "Date";
-                paramDate.DbType = DbType.Date;
-                paramDate.Value = user.Birthdate;
+                DbParameter paramT = cmd.CreateParameter();
+                paramT.ParameterName = "typ";
+                paramT.DbType = System.Data.DbType.Int32;
+                paramT.Value = auto.Typ;
 
-                DbParameter paramG = cmdInsert.CreateParameter();
-                // hier denn oben gewählten Parameter name verwenden
-                paramG.ParameterName = "Gender";
-                paramG.DbType = DbType.Int32;
-                paramG.Value = user.Gender;
+                DbParameter paramL = cmd.CreateParameter();
+                paramL.ParameterName = "Link";
+                paramL.DbType = System.Data.DbType.Int32;
+                paramL.Value = auto.Link;
 
                 //Paraneter mit unserem Command angeben
 
-                cmdInsert.Parameters.Add(paramPWD);
-                cmdInsert.Parameters.Add(paramEmail);
-                cmdInsert.Parameters.Add(paramDate);
-                cmdInsert.Parameters.Add(paramG);
+                cmd.Parameters.Add(paramN);
+                cmd.Parameters.Add(paramB);
+                cmd.Parameters.Add(paramT);
+                cmd.Parameters.Add(paramL);
+                
 
                 //nun senden wir das Command an den server
-                return await cmdInsert.ExecuteNonQueryAsync() == 1;
+                return await cmd.ExecuteNonQueryAsync() == 1;
 
             }
             return false;

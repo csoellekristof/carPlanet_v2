@@ -14,7 +14,7 @@ namespace CarPlanet.Models.DB.sql
 
         Task<bool> InsertAsync(Autos auto);
         Task<bool> DeleteAsync(int autoId);
-        Task<bool> ChangeAutoDataAsync(int userId, User newUserData);
+        Task<bool> ChangeAutoDataAsync(int autoId, Autos newAutoData);
 
         Task<Autos> GetAutoAsync(int autoId);
         Task<List<Autos>> GetAllAutosAsync();
