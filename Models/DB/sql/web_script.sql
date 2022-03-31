@@ -20,4 +20,5 @@ create table Autos(
 	constraint auto_id_PK primary key(auto_id)
 	);
 
+
 insert into Autos values(null,"Schnelles brumm brumm", "supersport","MclarenP1","Hier sollte link stehen");
