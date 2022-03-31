@@ -22,23 +22,26 @@ namespace CarPlanet.Models
                 }
             }
         }
-        public string Autoname { get; set; }
+        public string Name { get; set; }
 
-        public string Brand { get; set; }
+        public string Beschreibung { get; set; }
 
-        public DateTime ReleaseDate { get; set; }
+        public string Typ { get; set; }
 
-        public int PS { get; set; }
+        public string Link { get; set; }
 
-        public Autos(int AutoId, string Autoname, string Brand, DateTime ReleaseDate, int PS)
+
+        public Autos(int AutoId, string Name, string Beschreibung, string Typ, string Link)
         {
             this.AutoId = AutoId;
-            this.Autoname = Autoname;
-            this.Brand = Brand;
-            this.ReleaseDate = ReleaseDate;
-            this.PS = PS;
+            this.Name = Name;
+            this.Beschreibung = Beschreibung;
+            this.Typ = Typ;
+            this.Link = Link;
         }
 
-
+        public Autos()
+        {
+        }
     }
 }
