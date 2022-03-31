@@ -30,13 +30,16 @@ namespace CarPlanet.Models
 
         public int PS { get; set; }
 
-        public Autos(int AutoId, string Autoname, string Brand, DateTime ReleaseDate, int PS)
+        public string Link { get; set; }
+
+        public Autos(int AutoId, string Autoname, string Brand, DateTime ReleaseDate, int PS, string link)
         {
             this.AutoId = AutoId;
             this.Autoname = Autoname;
             this.Brand = Brand;
             this.ReleaseDate = ReleaseDate;
             this.PS = PS;
+            this.Link = link;
         }
 
 

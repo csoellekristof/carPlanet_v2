@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\ABG.pdf" />
+    <None Include="wwwroot\privacy.pdf" />
   </ItemGroup>
 
 </Project>
