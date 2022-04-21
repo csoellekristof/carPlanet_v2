@@ -1,4 +1,4 @@
-﻿using CarPlanet.Models.DB.sql;
+﻿using CarPlanet.Models.DB;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
