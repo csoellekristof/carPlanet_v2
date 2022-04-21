@@ -211,17 +211,17 @@ namespace CarPlanet.Models.DB
 
 
                 DbParameter paramN = cmd.CreateParameter();
-                paramN.ParameterName = "name";
+                paramN.ParameterName = "Name";
                 paramN.DbType = System.Data.DbType.String;
                 paramN.Value = auto.Name;
 
                 DbParameter paramB = cmd.CreateParameter();
-                paramB.ParameterName = "beschreibung";
+                paramB.ParameterName = "Beschreibung";
                 paramB.DbType = System.Data.DbType.String;
                 paramB.Value = auto.Beschreibung;
 
                 DbParameter paramT = cmd.CreateParameter();
-                paramT.ParameterName = "typ";
+                paramT.ParameterName = "Typ";
                 paramT.DbType = System.Data.DbType.Int32;
                 paramT.Value = auto.Typ;
 
