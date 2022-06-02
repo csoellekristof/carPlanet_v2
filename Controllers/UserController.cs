@@ -39,6 +39,34 @@ namespace CarPlanet.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public async Task<IActionResult> CheckEmail(string email)
+        {
+            
+
+            try
+            {
+                await _rep.ConnectAsync();
+                if (await _rep.GetEmailAsync(email))
+                {
+                    return new JsonResult(true);
+
+                }
+                else
+                {
+                    return new JsonResult(false);
+                }
+            }
+            catch (DbException)
+            {
+                return View("Message", new Message("JavaScript", "Datenbankfehler!", "Bitte versuchen sie es später erneut!"));
+
+            }
+            finally
+            {
+                await _rep.DisconnectAsync();
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register(User userDataFromForm)
         {

@@ -210,6 +210,40 @@ namespace FirstWebApp.Models.DB
 
         }
 
+        public async Task<bool> GetEmailAsync(string mail)
+        {
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                DbCommand cmdInsert = this._conn.CreateCommand();
+
+                cmdInsert.CommandText = "select email from users where email = @mail";
+                //leeres Parameter Object erzeugen
+                DbParameter paramUN = cmdInsert.CreateParameter();
+                // hier denn oben gewählten Parameter name verwenden
+                paramUN.ParameterName = "mail";
+                paramUN.DbType = DbType.String;
+                paramUN.Value = mail;
+
+
+
+                //Paraneter mit unserem Command angeben
+                cmdInsert.Parameters.Add(paramUN);
+
+                using (DbDataReader reader = await cmdInsert.ExecuteReaderAsync())
+                {
+                    if (await reader.ReadAsync())
+                    {
+                        if(mail == Convert.ToString(reader["email"]))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+
+        }
+
         public async Task<bool> InsertAsync(User user)
         {
             if (this._conn?.State == ConnectionState.Open)

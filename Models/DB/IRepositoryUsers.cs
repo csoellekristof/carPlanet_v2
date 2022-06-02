@@ -22,6 +22,8 @@ namespace FirstWebApp.Models.DB
         Task<bool> ChangeUserDataAsync(int userId, User newUserData);
 
         Task<User> GetUserAsync(int userId);
+
+        Task<bool> GetEmailAsync(string email);
         Task<List<User>> GetAllUsersAsync();
 
         Task<bool> LoginAsync(string email, string password);
