@@ -1,0 +1,31 @@
+﻿@model CarPlanet.Models.Autos
+
+@{
+    ViewData["Title"] = "Insert";
+}
+
+<body>
+    <form asp-controller="Auto" asp-action="Insert" method="post">
+        <div class="form-group">
+            <label asp-for="Name">Name</label>
+            <input type="text" class="form-control" asp-for="Name" placeholder="Name eingeben">
+        </div>
+        <div class="form-group">
+            <label asp-for="Beschreibung">Beschreibung</label>
+            <input type="text" class="form-control" asp-for="Beschreibung" placeholder="Beschreibung eingeben">
+        </div>
+        <div class="form-group">
+            <label asp-for="Typ">Typ</label>
+            <input type="text" class="form-control" asp-for="Typ" placeholder="Typ eingeben">
+        </div>
+        <div class="form-group">
+            <label asp-for="Link">Bild</label>
+            <input type="file" class="form-control" asp-for="Link" placeholder="Dateipfad eingeben">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Hinzufügen</button>
+
+
+    </form>
+
+</body>

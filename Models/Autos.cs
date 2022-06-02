@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace CarPlanet.Models
@@ -29,6 +31,8 @@ namespace CarPlanet.Models
         public string Typ { get; set; }
 
         public string Link { get; set; }
+
+        
 
 
         public Autos(int AutoId, string Name, string Beschreibung, string Typ, string Link)

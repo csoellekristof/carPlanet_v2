@@ -5,12 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using CarPlanet.Models;
 using FirstWebApp.Models.DB;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 namespace CarPlanet.Controllers
 {
     public class UserController : Controller
     {
-        private IRepositoryUsers _rep = new RepositoryUsersDB();
+        private IRepositoryUsers _rep = new RepositoryUsersDB(new HttpContextAccessor());
         public IActionResult Index()
         {
             
@@ -19,11 +20,23 @@ namespace CarPlanet.Controllers
 
         [HttpGet]
         public IActionResult Register() {
+            if (HttpContext.Session.GetString("Username") != null)
+            {
+                return View("Logout");
+            }
             return View();
         }
         [HttpGet]
         public IActionResult Login() {
+            if (HttpContext.Session.GetString("Username") != null) {
+                return View("Logout");
+            }
             return View();
+        }
+        [HttpGet]
+        public IActionResult Logout() {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -91,7 +104,8 @@ namespace CarPlanet.Controllers
                     await _rep.ConnectAsync();
                     if (await _rep.LoginAsync(userDataFromForm.Email, userDataFromForm.Passwort))
                     {
-                        return View("Message", new Message("Login", "Sie sind jetzt angemeldet"));
+                       
+                        return RedirectToAction("Index","Home");
 
                     }
                     else

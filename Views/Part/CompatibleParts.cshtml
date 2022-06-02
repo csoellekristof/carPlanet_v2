@@ -1,0 +1,38 @@
+﻿@model List<CarPlanet.Models.Part>
+
+@{
+    ViewData["Title"] = "Parts";
+}
+
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Beschreibung</th>
+            <th scope="col">Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Part a in Model)
+        {
+
+            <tr>
+                <td>@a.Name</td>
+                <td>@a.Description</td>
+                <td>
+                    <a class="btn btn-primary" href="@a.Link" target="_blank">Kaufen</a>
+                    @if (ViewBag.isAdmin == 1) { 
+                        <a class="btn btn-danger" asp-controller="Part" asp-action="Delete" asp-route-id="@a.PartID">Löschen</a>
+                    }
+                    
+                </td>
+            </tr>
+
+        }
+    </tbody>
+
+</table>
+<a class="btn btn-primary" asp-controller="Auto" asp-action="Autos">Zurück</a>
+
+

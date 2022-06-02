@@ -7,15 +7,22 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="MySql.Data" Version="8.0.28" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Files\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\ABG.pdf" />
+    <None Include="wwwroot\Images\a5.jpg" />
+    <None Include="wwwroot\Images\corvette.webp" />
+    <None Include="wwwroot\Images\mclaren.jpg" />
+    <None Include="wwwroot\Images\mustang.jpg" />
+    <None Include="wwwroot\Images\nissangtr.webp" />
+    <None Include="wwwroot\Images\supra.jpg" />
     <None Include="wwwroot\privacy.pdf" />
   </ItemGroup>
 

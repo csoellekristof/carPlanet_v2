@@ -94,7 +94,7 @@ namespace CarPlanet.Models.DB
                 //SQL Befahl angeben und Parameter verwenden um sql injections zu vermeiden
                 //  @username ... kann frei gewählt werden
                 //SQL injection: es versucht ein Angreifer einen SQL-Befehl an den MySQL server zu senden
-                cmdInsert.CommandText = "delete from autos where autop_id = @autoID";
+                cmdInsert.CommandText = "delete from autos where auto_id = @autoID";
                 //Parameter @username befüllen
                 //leeres Parameter Object erzeugen
                 DbParameter paramID = cmdInsert.CreateParameter();
@@ -222,13 +222,14 @@ namespace CarPlanet.Models.DB
 
                 DbParameter paramT = cmd.CreateParameter();
                 paramT.ParameterName = "Typ";
-                paramT.DbType = System.Data.DbType.Int32;
+                paramT.DbType = System.Data.DbType.String;
                 paramT.Value = auto.Typ;
 
                 DbParameter paramL = cmd.CreateParameter();
                 paramL.ParameterName = "Link";
-                paramL.DbType = System.Data.DbType.Int32;
-                paramL.Value = auto.Link;
+                paramL.DbType = System.Data.DbType.String;
+                paramL.Value = "\\Images\\" + auto.Link;
+
 
                 //Paraneter mit unserem Command angeben
 

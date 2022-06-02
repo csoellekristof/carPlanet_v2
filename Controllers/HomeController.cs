@@ -1,4 +1,5 @@
 ﻿using CarPlanet.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,44 +17,27 @@ namespace CarPlanet.Controllers {
         }
 
         public IActionResult Index() {
+            ViewBag.username = HttpContext.Session.GetString("Username");
+            ViewBag.isAdmin = HttpContext.Session.GetInt32("IsAdmin");
+
             return View();
         }
 
         public IActionResult Privacy() {
             return View();
         }
-        public IActionResult Autos() {
-           
-            return View();
-        }
+       
         public IActionResult Impressum() {
             return View();
         }
-        public IActionResult Ersatzteile() {
-            List<Ersatzteil> e = TeilListe();
-            return View(e);
-        }
-
+       
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        private List<Autos> AutosListe()
-        {
-           
+        
 
-            return new List<Autos>() {
-               
-            };
-        }
-
-        private List<Ersatzteil> TeilListe()
-        {
-           
-            return new List<Ersatzteil>() {
-               
-            };
-        }
+       
     }
 
 }

@@ -5,6 +5,12 @@
 <h1>CarPlanet</h1>
 
 <p>
-    Wir haben diese Seite erstellt um sie über verschiedene Autos zu informieren. Deswegen besuchen sie regelmäßig unsere seite um nichts neues zum Thema autos zu verpassen.
+    Willkommen auf unsere Seite, @ViewBag.username !
 </p>
+
+@if (@ViewBag.isAdmin == 1) { 
+    <p>
+        You are logged in as Administrator
+    </p>
+} 
 

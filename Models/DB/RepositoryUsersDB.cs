@@ -1,4 +1,5 @@
 ﻿using CarPlanet.Models;
+using Microsoft.AspNetCore.Http;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,18 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace FirstWebApp.Models.DB
 {
     //Diese Klasse implementiert unser Interface
     public class RepositoryUsersDB : IRepositoryUsers
     {
+        private IHttpContextAccessor _httpContextAccessor;
+
+        public RepositoryUsersDB(IHttpContextAccessor _httpContextAccessor) {
+            this._httpContextAccessor = _httpContextAccessor;
+        }
+
         //Verbindungszeichenkette: enthält Server Ip, Datendbankname, User + Passwort
         // DB - Server
         private string _connectionString = "Server=localhost;database=carplanet;user=root;password=";
@@ -144,7 +152,8 @@ namespace FirstWebApp.Models.DB
                             Passwort = Convert.ToString(reader["password"]),
                             Birthdate = Convert.ToDateTime(reader["birthdate"]),
                             Email = Convert.ToString(reader["email"]),
-                            Gender = (Gender)Convert.ToInt32(reader["gender"])
+                            Gender = (Gender)Convert.ToInt32(reader["gender"]),
+                            IsAdmin = Convert.ToBoolean(reader["isAdmin"])
 
                         }
                         );
@@ -190,7 +199,8 @@ namespace FirstWebApp.Models.DB
                             Passwort = Convert.ToString(reader["password"]),
                             Birthdate = Convert.ToDateTime(reader["birthdate"]),
                             Email = Convert.ToString(reader["email"]),
-                            Gender = (Gender)Convert.ToInt32(reader["gender"])
+                            Gender = (Gender)Convert.ToInt32(reader["gender"]),
+                            IsAdmin = Convert.ToBoolean(reader["isAdmin"])
                         };
                         return user;
                     }
@@ -209,7 +219,7 @@ namespace FirstWebApp.Models.DB
                 //SQL Befahl angeben und Parameter verwenden um sql injections zu vermeiden
                 //  @username ... kann frei gewählt werden
                 //SQL injection: es versucht ein Angreifer einen SQL-Befehl an den MySQL server zu senden
-                cmdInsert.CommandText = "insert into users values(null, sha2(@password, 512), @mail,@Date,@Gender)";
+                cmdInsert.CommandText = "insert into users values(null, sha2(@password, 512), @mail,@Date,@Gender,0)";
                 //Parameter @username befüllen
                 //leeres Parameter Object erzeugen
                 
@@ -260,7 +270,7 @@ namespace FirstWebApp.Models.DB
             {
                 DbCommand cmdInsert = this._conn.CreateCommand();
 
-                cmdInsert.CommandText = "select email from users where email = @email and password = sha2(@password, 512)";
+                cmdInsert.CommandText = "select email, isAdmin from users where email = @email and password = sha2(@password, 512)";
                 //leeres Parameter Object erzeugen
                 DbParameter paramUN = cmdInsert.CreateParameter();
                 // hier denn oben gewählten Parameter name verwenden
@@ -283,8 +293,12 @@ namespace FirstWebApp.Models.DB
                     if (await reader.ReadAsync())
                     {
                         string Username = Convert.ToString(reader["email"]);
+                        int IsAdmin = Convert.ToInt32(reader["isAdmin"]);
                         if (Username.Equals(email))
                         {
+                            
+                            _httpContextAccessor.HttpContext.Session.SetString("Username", Username);
+                            _httpContextAccessor.HttpContext.Session.SetInt32("IsAdmin", IsAdmin);
                             return true;
                         }
 
